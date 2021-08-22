@@ -1,5 +1,5 @@
 class Slurm
-  attr_accessor :interface
+  attr_accessor :sample
 
   def initialize
     yield self if block_given?
@@ -14,7 +14,7 @@ class Slurm
   end
 
   def sample
-    6
+    raise "implement me in subclass"
   end
 
   def partition
@@ -22,7 +22,7 @@ class Slurm
   end
 
   def file_name
-    'deepNNEq_cv_hpc.py'
+    raise "implement me in subclass"
   end
 
 end

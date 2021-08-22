@@ -1,12 +1,13 @@
 require 'erb'
-require_relative 'slurm'
+require_relative 'cv_slurm'
 
-desc "make a config file"
+desc "make a HPC cluster file"
 
 task :config do
   Rake::Task["clean"].invoke
  
-  slurm = Slurm.new do |h|
+  slurm = CvSlurm.new do |h|
+    h.sample = 4
   end
 
   template = File.read("hpc.slurm.erb")

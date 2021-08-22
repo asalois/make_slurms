@@ -20,5 +20,5 @@ module load Anaconda3
 source activate $HOME/condatf2
 export HDF5_USE_FILE_LOCKING='FALSE' 
 echo "Run a Python script"
-python3 deepNNEq_cv_hpc.py ${SLURM_ARRAY_TASK_ID} 6
+python3 deep_nnEq_cv_hpc.py ${SLURM_ARRAY_TASK_ID} 6
 echo "Ended batch processing at `date`.
