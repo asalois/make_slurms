@@ -35,5 +35,34 @@ jobs:
     filename: nn_test02.slurm
     sample: 2
     <<: *default
+    <<: *test 
+  cv3:
+    filename: nn_cv03.slurm
+    sample: 3
+    <<: *default
+    <<: *cv
+  test3:
+    filename: nn_test03.slurm
+    sample: 3
+    <<: *default
     <<: *test
-# add as many jobs as you want here using the two examples above
+  cv4:
+    filename: nn_cv04.slurm
+    sample: 4
+    <<: *default
+    <<: *cv
+  test4:
+    filename: nn_test04.slurm
+    sample: 4
+    <<: *default
+    <<: *test
+  cv5:
+    filename: nn_cv05.slurm
+    sample: 5
+    <<: *default
+    <<: *cv
+  test5:
+    filename: nn_test05.slurm
+    sample: 5
+    <<: *default
+    <<: *test
