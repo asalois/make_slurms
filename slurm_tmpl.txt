@@ -3,9 +3,9 @@
 #SBATCH --array=5-35
 #SBATCH -n 16 # Number of tasks when using MPI. Default is 1, and SLURM assumes the usage of 1 cpu per task.
 #SBATCH -N 1 # Number of nodes to spread cores across - default is 1 - if you are not using MPI this should likely be 1
-#SBATCH --mem  # Megabytes of memory requested. Default is 2000/task.
-#SBATCH -t  # Runtime in minutes
-#SBATCH -p  # Partition to submit to the standard compute node partition(defq) or the express node partition(express)
+#SBATCH --mem ${mem} # Megabytes of memory requested
+#SBATCH -t ${time} # Runtime in minutes
+#SBATCH -p ${queue} # Partition to submit to the standard compute node partition(defq) or the express node partition(express)
 #SBATCH --mail-user alexander.salois@student.montana.edu # this is the email you wish to be notified.
 #SBATCH --mail-type FAIL,END # this specifies what events you should get an email about ALL will alert you of job beginning, completion, failure, etc.
 #SBATCH -o nnEq_${test_cv}_%A_%2a.out.txt # Standard output
@@ -13,7 +13,7 @@
 
 date
 echo "Hello from $(hostname)."
-echo  "${"${"}SLURM_ARRAY_TASK_ID}"
+echo "${"${"}SLURM_ARRAY_TASK_ID}"
 lscpu
 
 module load Anaconda3
