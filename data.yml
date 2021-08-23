@@ -1,0 +1,39 @@
+# add all the things you want all jobs to inherit here
+default_job_properties: &default
+  mem: 4000
+  partition: defq
+
+cv_job_properties: &cv
+  test_cv: cv
+  time: 60
+  py_filename: deep_nnEq_cv_hpc.py
+
+test_job_properties: &test
+  test_cv: test
+  time: 60
+  py_filename: deep_nnEq_test_hpc.py
+  
+
+jobs:
+  cv1:
+    filename: nn_cv01.slurm
+    sample: 1
+    # this adds in all the stuff from the default_job_properties above
+    <<: *default
+    <<: *cv
+  test1:
+    filename: nn_test01.slurm
+    sample: 1
+    <<: *default
+    <<: *test
+  cv2:
+    filename: nn_cv02.slurm
+    sample: 2
+    <<: *default
+    <<: *cv
+  test2:
+    filename: nn_test02.slurm
+    sample: 2
+    <<: *default
+    <<: *test
+# add as many jobs as you want here using the two examples above
