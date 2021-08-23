@@ -66,3 +66,13 @@ jobs:
     sample: 5
     <<: *default
     <<: *test
+  cv6:
+    filename: nn_cv06.slurm
+    sample: 6
+    <<: *default
+    <<: *cv
+  test6:
+    filename: nn_test06.slurm
+    sample: 6
+    <<: *default
+    <<: *test

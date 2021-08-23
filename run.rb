@@ -21,8 +21,8 @@ template_slurm = ERB.new(<<-ERB
 #SBATCH -p <%= job.partition%> # Partition to submit to the standard compute node partition(defq) or the express node partition(express)
 #SBATCH --mail-user alexander.salois@student.montana.edu # this is the email you wish to be notified.
 #SBATCH --mail-type FAIL,END # this specifies what events you should get an email about ALL will alert you of job beginning, completion, failure, etc.
-#SBATCH -o nnEq_<%= job.test_cv%>_%A_%a.out.txt # Standard output
-#SBATCH -e nnEq_<%= job.test_cv%>_%A_%a.err.txt # Standard error
+#SBATCH -o nnEq_<%= job.test_cv%>_%A_%2a.out.txt # Standard output
+#SBATCH -e nnEq_<%= job.test_cv%>_%A_%2a.err.txt # Standard error
 
 date
 echo "Hello from $(hostname)."
