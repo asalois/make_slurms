@@ -21,4 +21,4 @@ source activate $HOME/condatf2
 export HDF5_USE_FILE_LOCKING='FALSE' 
 echo "Run a Python script"
 python3 ${py_file} ${"${"}SLURM_ARRAY_TASK_ID} ${sample}
-echo "Ended batch processing at `date`.
+echo "Ended batch processing at `date`."
