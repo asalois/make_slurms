@@ -6,8 +6,6 @@
 #SBATCH --mem ${mem} # Megabytes of memory requested
 #SBATCH -t ${time} # Runtime in minutes
 #SBATCH -p ${queue} # Partition to submit to the standard compute node partition(defq) or the express node partition(express)
-#SBATCH --mail-user alexander.salois@student.montana.edu # this is the email you wish to be notified.
-#SBATCH --mail-type FAIL,END # this specifies what events you should get an email about ALL will alert you of job beginning, completion, failure, etc.
 #SBATCH -o %A_${sample.zfill(2)}samples_%2a_snr.out.txt # Standard output
 #SBATCH -e %A_${sample.zfill(2)}samples_%2a_snr.err.txt # Standard error
 
