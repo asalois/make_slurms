@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J ${test_cv}${sample.zfill(2)} # Name for your job
+#SBATCH -J ${sample.zfill(2)}samples # Name for your job
 #SBATCH --array=5-35
 #SBATCH -n 16 # Number of tasks when using MPI. Default is 1, and SLURM assumes the usage of 1 cpu per task.
 #SBATCH -N 1 # Number of nodes to spread cores across - default is 1 - if you are not using MPI this should likely be 1
@@ -8,17 +8,18 @@
 #SBATCH -p ${queue} # Partition to submit to the standard compute node partition(defq) or the express node partition(express)
 #SBATCH --mail-user alexander.salois@student.montana.edu # this is the email you wish to be notified.
 #SBATCH --mail-type FAIL,END # this specifies what events you should get an email about ALL will alert you of job beginning, completion, failure, etc.
-#SBATCH -o nnEq_${test_cv}_%A_%2a.out.txt # Standard output
-#SBATCH -e nnEq_${test_cv}_%A_%2a.err.txt # Standard error
+#SBATCH -o %A_${sample.zfill(2)}samples_%2a_snr.out.txt # Standard output
+#SBATCH -e %A_${sample.zfill(2)}samples_%2a_snr.err.txt # Standard error
 
 date
 echo "Hello from $(hostname)."
-echo "${"${"}SLURM_ARRAY_TASK_ID}"
+echo "SNR = ${"${"}SLURM_ARRAY_TASK_ID}"
 lscpu
 
 module load Anaconda3
 source activate $HOME/condatf2
 export HDF5_USE_FILE_LOCKING='FALSE' 
 echo "Run a Python script"
-python3 ${py_file} ${"${"}SLURM_ARRAY_TASK_ID} ${sample}
+python3 ${py_file_0} ${"${"}SLURM_ARRAY_TASK_ID} ${sample}
+python3 ${py_file_1} ${"${"}SLURM_ARRAY_TASK_ID} ${sample}
 echo "Ended batch processing at `date`."
