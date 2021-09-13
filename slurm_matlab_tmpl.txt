@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH -J get_ber # Name for your job
+#SBATCH -n 1 # Number of tasks when using MPI. 
+#SBATCH -N 1 # Number of nodes to spread cores across - default is 1 
+#SBATCH --mem ${mem} # Megabytes of memory requested. 
+#SBATCH -t ${time} # Runtime in minutes
+#SBATCH -p ${part} # Partition to submit to 
+#SBATCH --account classroom 
+#SBATCH -o get_ber_%A.out.txt # Standard output
+#SBATCH -e get_ber_%A.err.txt # Standard error
+
+date
+echo "Hello from $(hostname)."
+lscpu
+
+module load matlab/R2020a
+echo "Run get BER script"
+cd ${data_dir}
+matlab -nodesktop -nodisplay -nosplash -singleCompThread -r "addpath('${exe_dir}');get_ber;exit;"
+echo "Ended batch processing at `date`.

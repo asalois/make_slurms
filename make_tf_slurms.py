@@ -1,9 +1,10 @@
 from mako.template import Template
-my_tmpl = Template(filename='slurm_tmpl.txt')
-test_cv = ["cv","test"]
+my_tmpl = Template(filename='slurm_tf_tmpl.txt')
+my_scp_tmpl = Template(filename='cpy_hyalite_tmpl.txt')
 script_lines = "#!/bin/bash \n"
-py_file_path = "/mnt/lustrefs/scratch/v16b915/pof_nns/"
-memory = 6 * 1024
+py_file_path = "/mnt/lustrefs/scratch/v16b915/pof_nns/fiber100/e10_12relu_12tanh_10tanh_8tanh_6tanh_4tanh/"
+#py_file_path = "/mnt/lustrefs/scratch/v16b915/pof_nns/fiber100/e10_12tanh_12relu/"
+memory =  16 * 1024
 time_limit = 15 * 60
 
 for i in range(1,11):
@@ -21,3 +22,6 @@ for i in range(1,11):
 file = open("launch_nns.sh","w+")
 file.writelines(script_lines)        
 
+file = open("cpy_hyalite.sh","w+")
+scp = my_scp_tmpl.render(path=py_file_path)
+file.writelines(scp)        
