@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH -J processData # Name for your job
+#SBATCH -n 1 # Number of tasks when using MPI. 
+#SBATCH -N 1 # Number of nodes to spread cores across
+#SBATCH --mem ${mem} # Megabytes of memory requested
+#SBATCH -t ${time} # Runtime in minutes
+#SBATCH -p ${queue} # Partition to submit to 
+#SBATCH -o process_data_%A.out.txt # Standard output
+#SBATCH -e process_data_%A.err.txt # Standard error
+
+date
+echo "Hello from $(hostname)."
+lscpu
+
+module load GDAL/2.2.3-foss-2018b-Python-3.6.6
+source /home/alexander.salois/dataPro/bin/activate
+echo "Run a Python script to process tf ANN data"
+cd ${dir}
+bash ${exe_dir}${script}
+python3 ${exe_dir}${py_file} 
+echo "Ended batch processing at `date`."

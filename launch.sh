@@ -1,8 +1,0 @@
-#!/bin/bash 
-sbatch e10_12linear.slurm
-sbatch e10_12relu_12tanh.slurm
-sbatch e10_12relu_12tanh_10tanh_8tanh_6tanh_4tanh.slurm
-sbatch e10_12relu_12tanh_12tanh_12tanh_12tanh_12tanh.slurm
-sbatch e10_12relu_12tanh_8tanh_4tanh_8tanh_12tanh.slurm
-sbatch e10_12relu_4tanh_6tanh_8tanh_10tanh_12tanh.slurm
-sbatch e10_12tanh_12relu.slurm
