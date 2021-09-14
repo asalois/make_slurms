@@ -15,5 +15,5 @@ lscpu
 module load matlab/R2020a
 echo "Run get BER script"
 cd ${data_dir}
-matlab -nodesktop -nodisplay -nosplash -singleCompThread -r "addpath('${exe_dir}');get_ber;exit;"
+matlab -nodesktop -nodisplay -nosplash -singleCompThread -r "addpath('${exe_dir}');get_ber("${mat_name}");exit;"
 echo "Ended batch processing at `date`.
