@@ -12,7 +12,8 @@ from_dirs =[
     ]
 
 for r_dir in from_dirs: 
-        script_lines += "cp " + from_dir_path + r_dir + "/*berDNNTF.mat " + to_dir + "\n"
+        script_lines += "cp " + from_dir_path + r_dir + "/*berDNNTF.mat " + to_dir + r_dir + "_berDNNTF.mat\n"
+        script_lines += "cp " + from_dir_path + r_dir + "/*bernn.png " + to_dir + r_dir + "_bernn.png\n"
 
 file = open("cpy_mats.sh","w+")
 file.writelines(script_lines)
