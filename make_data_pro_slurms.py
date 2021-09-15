@@ -1,9 +1,11 @@
 from mako.template import Template
 my_tmpl = Template(filename='slurm_process_tmpl.txt')
+my_scp_tmpl = Template(filename='cpy_hyalite_tmpl.txt')
 memory = 2 * 1024
-time = 1 * 60
+time = 10
 partition = "defq"
 script_lines = "#!/bin/bash \n"
+cpy_path = "/mnt/lustrefs/scratch/v16b915/pof_data_process"
 x_dir = "/mnt/lustrefs/scratch/v16b915/pof_data_process/"
 p_file = 'process.py'
 script_file = "make_csv.sh"
@@ -21,7 +23,7 @@ data_dirs =[
 for r_dir in data_dirs: 
         data = data_dir_path + r_dir
         lines = my_tmpl.render(mem=memory,time=time,queue=partition,\
-            dir=data,exe_dir=x_dir,py_file=p_file,script=script_file) 
+            dir=data,exe_dir=x_dir,py_file=p_file,script=script_file,arch=r_dir) 
         lines += "\n"
         file_name = r_dir + ".slurm"
         script_lines += "sbatch " + file_name + "\n"  
@@ -32,3 +34,6 @@ for r_dir in data_dirs:
 file = open("launch.sh","w+")
 file.writelines(script_lines)        
 
+file = open("cpy_hyalite.sh","w+")
+scp = my_scp_tmpl.render(path=cpy_path)
+file.writelines(scp)  

@@ -1,5 +1,6 @@
 from mako.template import Template
 my_tmpl = Template(filename='slurm_matlab_tmpl.txt')
+my_scp_tmpl = Template(filename='cpy_hyalite_tmpl.txt')
 memory = 6 * 1024
 time = 12 * 60
 partition = "defq"
@@ -18,7 +19,7 @@ data_dirs =[
 
 for r_dir in data_dirs: 
         data = data_dir_path + r_dir
-        lines = my_tmpl.render(mem=memory,time=time,queue=partition,data_dir=data,exe_dir=x_dir) 
+        lines = my_tmpl.render(mem=memory,time=time,queue=partition,data_dir=data,exe_dir=x_dir,mat_name=r_dir) 
         lines += "\n"
         file_name = r_dir + ".slurm"
         script_lines += "sbatch " + file_name + "\n"  
@@ -29,3 +30,6 @@ for r_dir in data_dirs:
 file = open("launch.sh","w+")
 file.writelines(script_lines)        
 
+file = open("cpy_hyalite.sh","w+")
+scp = my_scp_tmpl.render(path=x_dir)
+file.writelines(scp)
