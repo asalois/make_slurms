@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH -J get_ber # Name for your job
+#SBATCH -J ${j_name} # Name for your job
 #SBATCH -n 1 # Number of tasks when using MPI. 
 #SBATCH -N 1 # Number of nodes to spread cores across - default is 1 
-#SBATCH --array=${start_ar}-${end_ar} 
+#SBATCH --array=${start_ar}-${end_ar}%1 
 #SBATCH --mem ${mem} # Megabytes of memory requested. 
 #SBATCH -t ${time} # Runtime in minutes
 #SBATCH -p ${queue} # Partition to submit to 
-#SBATCH -o get_ber_%A.out.txt # Standard output
-#SBATCH -e get_ber_%A.err.txt # Standard error
+#SBATCH -o ${j_name}_%A_%2a.out.txt # Standard output
+#SBATCH -e ${j_name}_%A_%2a.err.txt # Standard error
 
 date
 echo "Hello from $(hostname)."
@@ -15,6 +15,5 @@ lscpu
 
 module load matlab/R2020a
 echo "Run get BER script"
-cd ${data_dir}
-matlab -nodesktop -nodisplay -nosplash -singleCompThread -r "addpath('${exe_dir}');get_ber(${"${"}SLURM_ARRAY_TASK_ID}) ;exit;"
+matlab -nodesktop -nodisplay -nosplash -singleCompThread -r "${m_file}(${"${"}SLURM_ARRAY_TASK_ID}+${plus}) ;exit;"
 echo "Ended batch processing at `date`.
