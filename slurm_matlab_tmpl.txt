@@ -6,8 +6,8 @@
 #SBATCH --mem ${mem} # Megabytes of memory requested. 
 #SBATCH -t ${time} # Runtime in minutes
 #SBATCH -p ${queue} # Partition to submit to 
-#SBATCH -o ${j_name}_%A_%2a.out.txt # Standard output
-#SBATCH -e ${j_name}_%A_%2a.err.txt # Standard error
+#SBATCH -o ${j_name}_%A_%4a.out.txt # Standard output
+#SBATCH -e ${j_name}_%A_%4a.err.txt # Standard error
 
 date
 echo "Hello from $(hostname)."
@@ -16,4 +16,4 @@ lscpu
 module load matlab/R2020a
 echo "Run get BER script"
 matlab -nodesktop -nodisplay -nosplash -singleCompThread -r "${m_file}(${"${"}SLURM_ARRAY_TASK_ID}+${plus}) ;exit;"
-echo "Ended batch processing at `date`.
+echo "Ended batch processing at `date`."
