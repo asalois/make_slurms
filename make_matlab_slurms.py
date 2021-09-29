@@ -11,19 +11,22 @@ x_dir = "/mnt/lustrefs/scratch/v16b915/dfe_scan_new/"
 last = 3542
 
 for i in range(16): 
-        start = 1
-        end = 1000
-        if i == 4:
-            end = last - 3000
+        ar_start = 1
+        ar_end = 1000
+        if i == 15:
+            ar_end = 300
 
-        pl = 1000*(i-1)
+        pl = 1000*i
         lines = my_tmpl.render(mem=memory,time=time,queue=partition,\
-            num=i,plus=pl) 
+            start=ar_start,end=ar_end,limit=6,num=i,plus=pl) 
         lines += "\n"
         file_name = "dfe_ber_" + str(i).zfill(2) + ".slurm"
-        script_lines += "sbatch " + file_name + "\n"  
         file = open(file_name,"w+")
         file.writelines(lines)
+        if i == 0:
+            script_lines += "jb_id"+ str(i).zfill(2) +"=$((sbatch " + file_name + ") | cut -d \" \" 3- )\n"  
+        else:
+            script_lines += "jb_id"+ str(i).zfill(2) +"=$((sbatch --depenendency=afterany:"+"$jb_id"+ str(i-1).zfill(2) + " " +file_name + ") | cut -d \" \" 3- )\n"  
 
 
 file = open("launch.sh","w+")
