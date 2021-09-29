@@ -1,9 +1,9 @@
 from mako.template import Template
 my_tmpl = Template(filename='slurm_matlab_tmpl.txt')
 my_scp_tmpl = Template(filename='cpy_hyalite_tmpl.txt')
-memory = 4 * 1024
-time = 30
-partition = "defq"
+memory = 5 * 1024
+time = 40
+partition = "unsafe"
 mfile_name = "scan_dfe"
 job_name = "ber_dfe"
 script_lines = "#!/bin/bash \n"
@@ -25,7 +25,7 @@ for i in range(16):
         if i == 0:
             script_lines += "jb_id"+ str(i).zfill(2) +"=$((sbatch " + file_name + ") | cut -d \" \" -f 4 )\n"  
         else:
-            script_lines += "jb_id"+ str(i).zfill(2) +"=$((sbatch --depenendency=afterany:"+"$jb_id"+ str(i-1).zfill(2) + " " +file_name + ") | cut -d \" \" -f 4 )\n"  
+            script_lines += "jb_id"+ str(i).zfill(2) +"=$((sbatch --dependency=afterany:"+"$jb_id"+ str(i-1).zfill(2) + " " +file_name + ") | cut -d \" \" -f 4 )\n"  
 
 
 file = open("launch.sh","w+")
