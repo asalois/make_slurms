@@ -8,7 +8,6 @@ mfile_name = "scan_dfe"
 job_name = "ber_dfe"
 script_lines = "#!/bin/bash \n"
 x_dir = "/mnt/lustrefs/scratch/v16b915/dfe_scan_new/"
-last = 3542
 
 for i in range(16): 
         ar_start = 1
@@ -24,9 +23,9 @@ for i in range(16):
         file = open(file_name,"w+")
         file.writelines(lines)
         if i == 0:
-            script_lines += "jb_id"+ str(i).zfill(2) +"=$((sbatch " + file_name + ") | cut -d \" \" 3- )\n"  
+            script_lines += "jb_id"+ str(i).zfill(2) +"=$((sbatch " + file_name + ") | cut -d \" \" -f 4 )\n"  
         else:
-            script_lines += "jb_id"+ str(i).zfill(2) +"=$((sbatch --depenendency=afterany:"+"$jb_id"+ str(i-1).zfill(2) + " " +file_name + ") | cut -d \" \" 3- )\n"  
+            script_lines += "jb_id"+ str(i).zfill(2) +"=$((sbatch --depenendency=afterany:"+"$jb_id"+ str(i-1).zfill(2) + " " +file_name + ") | cut -d \" \" -f 4 )\n"  
 
 
 file = open("launch.sh","w+")
