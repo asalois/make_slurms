@@ -2,11 +2,11 @@ from mako.template import Template
 my_tmpl = Template(filename='slurm_matlab_tmpl.txt')
 my_scp_tmpl = Template(filename='cpy_hyalite_tmpl.txt')
 memory = 8 * 1024
-time = 400
+time = 600
 partition = "defq"
 mfile_name = "scan_dfe"
 script_lines = "#!/bin/bash \n"
-x_dir = "/mnt/lustrefs/scratch/v16b915/dfe_scan_new/"
+x_dir = "/mnt/lustrefs/scratch/v16b915/dfe_scan_smaller/"
 
 end = 6
 for i in range(end + 1): 
@@ -22,7 +22,12 @@ for i in range(end + 1):
         file_name = "dfe_ber_" + str(i).zfill(2) + ".slurm"
         file = open(file_name,"w+")
         file.writelines(lines)
-        script_lines += "sbatch " + file_name + "\n"  
+        if i == 0:
+            script_lines += "jb_id"+ str(i).zfill(2) +"=$((sbatch " + file_name + ") | cut -d \" \" -f 4 )\n"  
+            script_lines += "echo $jb_id"+ str(i).zfill(2) + " && echo \"" + file_name + "\" \n"  
+        else:
+            script_lines += "jb_id"+ str(i).zfill(2) +"=$((sbatch --dependency=afterany:"+"$jb_id"+ str(i-1).zfill(2) + " " +file_name + ") | cut -d \" \" -f 4 )\n"  
+            script_lines += "echo $jb_id"+ str(i).zfill(2) + " && echo \"" + file_name + "\" \n"  
 
 
 file = open("launch.sh","w+")
