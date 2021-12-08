@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -J berDFE${str(num).zfill(2)} # Name for your job
-#SBATCH -n 1 # Number of tasks when using MPI. 
+#SBATCH -n 2 # Number of tasks when using MPI. 
 #SBATCH -N 1 # Number of nodes to spread cores across - default is 1 
 #SBATCH --array=${start}-${end}%${limit} 
 #SBATCH --mem ${mem} # Megabytes of memory requested. 
